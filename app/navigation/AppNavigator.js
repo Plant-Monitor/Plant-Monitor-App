@@ -1,10 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import * as Notifications from 'expo-notifications';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import * as Notifications from 'expo-notifications';
 import HomeScreen from '../screens/HomeScreen';
 import WelcomePage from '../screens/WelcomePage';
-import MonitoringPage from '../screens/Monitoringpage';
+import MonitoringPage from '../screens/MonitoringPage';
+import PlantInfoScreen from '../screens/PlantInfoScreen';
 import expoPushTokensApi from '../api/expoPushTokens';
 
 const Tab = createBottomTabNavigator();
@@ -22,7 +25,7 @@ const AppNavigator = () => {
   useEffect(() => {
       // Get a token
       registerForPushNotificationsAsync()
-          .then(token => expoPushTokensApi.register(token));
+          //.then(token => expoPushTokensApi.register(token));
 
       // This listener is fired whenever a notification is received while the app is foregrounded
       
@@ -64,6 +67,24 @@ const AppNavigator = () => {
     return (
         <Tab.Navigator>
           <Tab.Screen 
+            name="Welcome" 
+            component={WelcomePage}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="human-greeting-variant" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen 
+            name="Information" 
+            component={PlantInfoScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="information-circle-outline" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen 
             name="Home" 
             component={HomeScreen}
             options={{
@@ -73,20 +94,11 @@ const AppNavigator = () => {
             }}
           />
           <Tab.Screen 
-            name="Welcome" 
-            component={WelcomePage}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="account" color={color} size={size} />
-              ),
-            }}
-          />
-          <Tab.Screen 
             name="Monitoring" 
             component={MonitoringPage}
             options={{
               tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="account" color={color} size={size} />
+                <Entypo name="line-graph" color={color} size={size} />
               ),
             }}
           />

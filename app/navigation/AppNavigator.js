@@ -4,6 +4,7 @@ import * as Notifications from 'expo-notifications';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import WelcomePage from '../screens/WelcomePage';
+import MonitoringPage from '../screens/Monitoringpage';
 import expoPushTokensApi from '../api/expoPushTokens';
 
 const Tab = createBottomTabNavigator();
@@ -16,7 +17,6 @@ Notifications.setNotificationHandler({
 
 const AppNavigator = () => {
 
-  const notificationListener = useRef();
   const responseListener = useRef();
 
   useEffect(() => {
@@ -25,11 +25,7 @@ const AppNavigator = () => {
           .then(token => expoPushTokensApi.register(token));
 
       // This listener is fired whenever a notification is received while the app is foregrounded
-      notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-          console.log('--- notification received ---');
-          console.log(notification);
-          console.log('------');
-      });
+      
 
       // This listener is fired whenever a user taps on or interacts with a notification
       // (works when app is foregrounded, backgrounded, or killed)
@@ -41,7 +37,7 @@ const AppNavigator = () => {
 
       // Unsubscribe from events
       return () => {
-          Notifications.removeNotificationSubscription(notificationListener.current);
+          //Notifications.removeNotificationSubscription(notificationListener.current);
           Notifications.removeNotificationSubscription(responseListener.current);
       };
   }, []);
@@ -79,6 +75,15 @@ const AppNavigator = () => {
           <Tab.Screen 
             name="Welcome" 
             component={WelcomePage}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="account" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen 
+            name="Monitoring" 
+            component={MonitoringPage}
             options={{
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="account" color={color} size={size} />

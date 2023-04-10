@@ -1,29 +1,54 @@
-import React from "react";
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from "react";
+import {View, Text, StyleSheet, TouchableOpacity,} from 'react-native';
 
 //The task takes in props (The text that you output is a prop)
-const Task = (props) => {
+// const Task = (props) => {
+function Task ({metric, interpretation, level, unit}) {
+
+
+
+
+    let squareColor; // default color
+
+
+   switch (interpretation) {
+    case "GOOD":
+        squareColor = "green"
+        break;
+    case "OKAY":
+        squareColor = "yellow"
+        break;
+    case "CRITICAL":
+        squareColor = "red"
+        break;
+   }
+
+   console.log(`interpretation: ${interpretation}`);
+
     return (
         <View style={styles.item}>
             <View style={styles.itemLeft}>
-                {/* The style of the sqaure or the measurement metric */}
                 {/* <TouchableOpacity style={styles.square}></TouchableOpacity> */}
             {/* The styling of the text itself */}
-            <Text style={styles.itemText}> {props.text}</Text>
+            <Text style={styles.itemText}> {metric} </Text>
+            <Text style={styles.itemTextElementLevel}> {`${level} ${unit}`} </Text>
             </View>
-            <View style={styles.itemRight}></View>
-            {/* <Text style={styles.itemTextElement}>{props.metric_2}</Text> */}
-            <TouchableOpacity style={styles.square}><Text style={styles.itemTextElement}>{props.metric_2}</Text></TouchableOpacity>
+            {/* <View style={[styles.square, {backgroundColor:squareColor}]}><Text style={styles.itemTextElement}> {props.metric} </Text></View> */}
+            <View style={[styles.square, {backgroundColor:squareColor}]}>
+                <Text style={styles.itemTextElement}> {interpretation} </Text>
+                
+            </View>
+
         </View>
     )
 }
 
-// a = 1;
-// if (a == 2){
-//     metric = 80;
-// }
+
+
+
 
 const styles= StyleSheet.create({
+    // item -> entire box 
     item: {
         backgroundColor: '#FFE4C4',
         marginTop : 30,
@@ -38,33 +63,44 @@ const styles= StyleSheet.create({
 
     },
     itemLeft : {
-        flexDirection : 'row',
+        flexDirection : 'column',
         alignItems : 'center',
         flexWrap : 'wrap',
         
     },
     square : {
-        width : 120,
+        width : 130,
         height : 120,
-        backgroundColor : 'green',
+        //backgroundColor : 'green',
         opacity : 0.4,
         borderRadius: 25,
     },
     itemText: {
-        fontFamily : 'Sans Serif',
-        fontSize : 35,
+        fontFamily : 'sans-serif',
+        fontSize : 33,
+        color : 'black',
+        fontWeight : 'bold'
     },
     itemTextElement: {
 
-        fontFamily : 'Sans-Serif',
-        fontSize : 45,
+        fontFamily : 'sans-serif',
+        fontSize : 25,
         textAlign : 'center',
-        color : 'white',
-        marginTop : 30,
-        marginHorizontal :10,
-        marginBottom : 30,
+        color : 'black',
+        marginTop : 45,
+        marginHorizontal: 0,
+        // marginBottom : 5,
+    },
 
+    itemTextElementLevel: {
 
+        //fontFamily : 'Sans-Serif',
+        fontSize : 25,
+        textAlign : 'center',
+        color : 'black',
+        marginTop : 10,
+        marginHorizontal: 1,
+        marginBottom : 10,
     }
 })
 

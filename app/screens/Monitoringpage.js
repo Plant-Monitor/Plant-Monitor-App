@@ -20,7 +20,7 @@ export default function MonitoringPage() {
   //Url to get data from
   
   const user_id = "68a07386-d07c-49b7-ae18-a15b4c8c21fb"
-  const url = `https://79ec-130-113-109-113.ngrok.io/snapshots?id=${user_id}`;
+  const url = `https://64ec-130-113-109-162.ngrok.io/snapshots?id=${user_id}`;
   const notificationListener = useRef();
   
   //used to render side effects in react native 
@@ -52,7 +52,7 @@ export default function MonitoringPage() {
         })
         .catch((error)=>console.error(error))
         .finally(()=> setLoading(false));
-    }, 30000)
+    }, 10000)
     return () => clearInterval(refreshTime);
   },  []);
   
@@ -88,7 +88,13 @@ export default function MonitoringPage() {
         <View>
           {
             data?.health_properties && Object.keys(data?.health_properties).map((property) => {
-              return <Task key={property} metric={property} interpretation={data?.health_properties[property]?.interpretation} level={data?.health_properties[property]?.level} unit={data?.health_properties[property]?.unit}/>
+              return (<Task 
+                key={property}
+                metric={property}
+                interpretation={data?.health_properties[property]?.interpretation}
+                level={data?.health_properties[property]?.level}
+                unit={data?.health_properties[property]?.unit}
+              />)
             })
           }
         </View>

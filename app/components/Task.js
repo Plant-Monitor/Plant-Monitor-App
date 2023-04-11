@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {View, Text, StyleSheet, TouchableOpacity,} from 'react-native';
-
 //The task takes in props (The text that you output is a prop)
-// const Task = (props) => {
-function Task ({metric, interpretation, level, unit}) {
 
+function Task ({metric, interpretation, level, unit}) {
+    
 
 
 
@@ -56,7 +55,7 @@ const styles= StyleSheet.create({
         marginBottom : 20,
         padding : 30,
         paddingHorizontal : 20,
-        borderRadius: 25,
+        borderRadius:75,
         flexDirection: 'row',
         alignItems : 'center',
         justifyContent : 'space-between',
@@ -73,17 +72,17 @@ const styles= StyleSheet.create({
         height : 120,
         //backgroundColor : 'green',
         opacity : 0.4,
-        borderRadius: 25,
+        borderRadius: 70,
     },
     itemText: {
-        fontFamily : 'sans-serif',
+        // fontFamily : 'Rowdies',
         fontSize : 33,
         color : 'black',
         fontWeight : 'bold'
     },
     itemTextElement: {
 
-        fontFamily : 'sans-serif',
+        // fontFamily : 'Rowdies',
         fontSize : 25,
         textAlign : 'center',
         color : 'black',
@@ -94,7 +93,7 @@ const styles= StyleSheet.create({
 
     itemTextElementLevel: {
 
-        //fontFamily : 'Sans-Serif',
+        // fontFamily : 'Rowdies',
         fontSize : 25,
         textAlign : 'center',
         color : 'black',

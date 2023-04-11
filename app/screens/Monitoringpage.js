@@ -4,7 +4,13 @@ import { ScrollView, StyleSheet, Text, View} from 'react-native';
 import Task from "../components/Task";
 import * as Notifications from 'expo-notifications';
 import apiClient from '../api/client';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
+
+
+// How to hide warnings
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true
@@ -14,14 +20,18 @@ Notifications.setNotificationHandler({
 
 // We are building by using a todo list app as a template
 export default function MonitoringPage() {
+
+  
   const [data, setData] = useState({timestamp: new Date()})
   //state for keepin track of when the data is set
   const [loading, setLoading] = useState(true)
   //Url to get data from
   
   const user_id = "68a07386-d07c-49b7-ae18-a15b4c8c21fb"
-  const url = `https://64ec-130-113-109-162.ngrok.io/snapshots?id=${user_id}`;
+  const url = `https://fc39-130-113-109-103.ngrok.io/snapshots?id=${user_id}`;
   const notificationListener = useRef();
+
+
   
   //used to render side effects in react native 
   useEffect(()=> {
@@ -41,7 +51,8 @@ export default function MonitoringPage() {
         };
       }, []);
   useEffect(() =>{
-    const refreshTime = setInterval(() => {
+    // const refreshTime = setInterval(() => {
+    const refreshTime = () => {
         fetch(url)
         .then((response)=> response.json())
         .then((json)=>{
@@ -52,11 +63,33 @@ export default function MonitoringPage() {
         })
         .catch((error)=>console.error(error))
         .finally(()=> setLoading(false));
-    }, 10000)
-    return () => clearInterval(refreshTime);
-  },  []);
-  
+    }
+// 
+    refreshTime();
 
+    const intervalId = setTimeout(() => {
+      refreshTime();
+    }, 15000);
+// 
+  // }, 10000)
+    return () => clearTimeout(intervalId);
+  },  []);
+
+
+
+  // const [loaded] = useFonts({
+  //   'Rowdies' : require('../assets/fonts/Rowdies-Light.ttf')
+  // })
+
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (loaded) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [loaded]);
+
+  // if (!loaded){
+  //   return null;
+  // }
 
   // > Fetch the url with the fetch method
   // > Get the response and transform the response to a json format
@@ -77,11 +110,10 @@ export default function MonitoringPage() {
     
 
         {/* Time Stamp */}
-        <View>
-          <Text style={styles.timeHeader}> Time Taken </Text>
+        <View style={styles.timeHeaderAll}>
+          <Text style={styles.timeHeader}> Most Recent Snapshot </Text>
           <Text style={styles.time}> {data?.timestamp.toLocaleDateString()} </Text>
           <Text style={styles.time}> {data?.timestamp.toLocaleTimeString()} </Text>
-          {/* <Text style={styles.time}> {data.timestamp} </Text> */}
           {/* todo: Put here*/}
         </View>
 
@@ -113,7 +145,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   tasksWrapper: {
-    backgroundColor: '#7bae37',
+    backgroundColor: '#50A060',
     paddingTop : 100,
     paddingHorizontal: 10
     
@@ -123,37 +155,66 @@ const styles = StyleSheet.create({
     textAlign : ('center', 'justify'),
     textAlign : 'center',
     // margin : 10,
-    //fontFamily : 'Sans-Serif',
+    // fontFamily : 'Rowdies',
     paddingBottom : 50,
     fontSize : 45,
     fontWeight : 'bold',
     color: '#FFE4C4'
   },
 
-
-  timeHeader: {
+  timeHeaderAll: {
+    backgroundColor: '#FFE4C4',
     
     textAlign : ('center', 'justify'),
     textAlign : 'center',
     // margin : 10,
-    //fontFamily : 'Sans-Serif',
+    // fontFamily : 'Rowdies',
+    
+    marginTop : 20,
+    // marginBottom : 10,
+    marginRight :50,
+    marginLeft : 50,
+    borderRadius: 75,
     paddingTop : 20,
     paddingBottom : 20,
     fontSize : 25,
+    
+    fontWeight : 'bold',
+    color: 'black'
+  },
+  timeHeader: {
+    backgroundColor: '#FFE4C4',
+    
+    textAlign : ('center', 'justify'),
+    textAlign : 'center',
+    // margin : 10,
+    // fontFamily : 'Rowdies',
+    
+    marginTop : 10,
+    // marginBottom : 10,
+    marginRight :50,
+    marginLeft : 50,
+    borderRadius: 25,
+    paddingTop : 20,
+    paddingBottom : 20,
+    fontSize : 25,
+    
     fontWeight : 'bold',
     color: 'black'
   },
   time: {
-    
+    backgroundColor: '#FFE4C4',
     textAlign : ('center', 'justify'),
     textAlign : 'center',
-    // margin : 10,
-    //fontFamily : 'Sans-Serif',
+    marginRight : 50,
+    marginLeft : 50,
+    margin : 2.5,
+    // fontFamily : 'Rowdies',
     paddingTop : 10,
     paddingBottom : 10,
-    fontSize : 15,
+    fontSize : 20,
     fontWeight : 'bold',
-    color: 'black'
+    color: 'black',
   },
   
   item: {},

@@ -65,44 +65,39 @@ const AppNavigator = () => {
         return token;
     }
     return (
-        <Tab.Navigator>
-          <Tab.Screen 
-            name="Welcome" 
-            component={WelcomePage}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="human-greeting-variant" color={color} size={size} />
-              ),
-            }}
-          />
-          <Tab.Screen 
-            name="Information" 
-            component={PlantInfoScreen}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="information-circle-outline" color={color} size={size} />
-              ),
-            }}
-          />
-          <Tab.Screen 
-            name="Home" 
-            component={HomeScreen}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="home" color={color} size={size} />
-              ),
-            }}
-          />
-          <Tab.Screen 
-            name="Monitoring" 
-            component={MonitoringPage}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <Entypo name="line-graph" color={color} size={size} />
-              ),
-            }}
-          />
-        </Tab.Navigator>
+      <Tab.Navigator
+      screenOptions ={{
+        headerShown: false
+      }}
+    >
+      <Tab.Screen 
+        name="Welcome" 
+        component={WelcomePage}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="human-greeting-variant" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="Home" 
+        component={PlantInfoScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="Monitoring" 
+        component={MonitoringPage}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Entypo name="line-graph" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
     );
 };
 

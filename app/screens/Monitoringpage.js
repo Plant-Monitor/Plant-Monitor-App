@@ -124,7 +124,7 @@ export default function MonitoringPage() {
                 key={property}
                 metric={property}
                 interpretation={data?.health_properties[property]?.interpretation}
-                level={data?.health_properties[property]?.level}
+                level={data?.health_properties[property]?.level.toFixed(1)}
                 unit={data?.health_properties[property]?.unit}
               />)
             })
@@ -142,7 +142,7 @@ export default function MonitoringPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '#f5fcff',
   },
   tasksWrapper: {
     backgroundColor: '#50A060',
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     paddingBottom : 50,
     fontSize : 45,
     fontWeight : 'bold',
-    color: '#FFE4C4'
+    color: '#f5fcff'
   },
 
   timeHeaderAll: {
